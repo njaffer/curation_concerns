@@ -9,12 +9,12 @@ describe CurationConcerns::GenericFileActor do
   let(:uploaded_file) { fixture_file_upload('/world.png', 'image/png') }
 
   describe 'creating metadata and content' do
-    let(:batch_id) { nil }
+    let(:upload_set_id) { ActiveFedora::Noid::Service.new.mint }
     let(:work_id) { nil }
     subject { generic_file.reload }
     before do
       allow(actor).to receive(:save_characterize_and_record_committer).and_return('true')
-      actor.create_metadata(batch_id, work_id)
+      actor.create_metadata(upload_set_id, work_id)
       actor.create_content(uploaded_file)
     end
     context 'when a work_id is provided' do

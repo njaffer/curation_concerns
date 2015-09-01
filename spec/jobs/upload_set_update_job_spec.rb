@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe BatchUpdateJob do
+describe UploadSetUpdateJob do
   let(:user) { FactoryGirl.find_or_create(:jill) }
-  let(:batch) { Batch.create }
+  let(:upload_set) { UploadSet.create }
 
   let!(:file) do
-    GenericFile.new(batch: batch) do |file|
+    GenericFile.new(upload_set: upload_set) do |file|
       file.apply_depositor_metadata(user)
       file.save!
     end
   end
 
   let!(:file2) do
-    GenericFile.new(batch: batch) do |file|
+    GenericFile.new(upload_set: upload_set) do |file|
       file.apply_depositor_metadata(user)
       file.save!
     end
@@ -27,7 +27,7 @@ describe BatchUpdateJob do
 
     let(:visibility) { nil }
 
-    let(:job) { described_class.perform_now(user.user_key, batch.id, title, metadata, visibility) }
+    let(:job) { described_class.perform_now(user.user_key, upload_set.id, title, metadata, visibility) }
 
     it "updates file metadata" do
       expect(job).to eq true
