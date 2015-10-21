@@ -59,7 +59,7 @@ describe CurationConcerns::FileSetsController do
         end
       end
 
-      context 'when solr is downs a virus' do
+      context 'when solr is down' do
         before do
           allow(controller.send(:actor)).to receive(:create_metadata)
           allow(controller.send(:actor)).to receive(:create_content).with(file).and_raise(RSolr::Error::Http.new({}, {}))
